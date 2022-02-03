@@ -37,14 +37,13 @@ export const userAuth = (req: Request, res: Response, next: NextFunction) => {
                 req.user_uuid = decoded.uuid
 
                 next()
+
             } else {
 
                 throw new ErrorHandler(401, "Non-admin users can only access their own data")
             }
-
-
         })
-
+        
     } catch (error) {
 
         next(error)
