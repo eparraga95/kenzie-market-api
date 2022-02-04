@@ -6,8 +6,7 @@ import { config } from '../../config/jwt.config'
 declare global {
     namespace Express {
       interface Request {
-        user_uuid: string,
-        isAdm: boolean
+        user_id: string,
       }
     }
 }
@@ -34,7 +33,7 @@ export const userAuth = (req: Request, res: Response, next: NextFunction) => {
 
             if (id === decoded.id || decoded.isAdm) {
 
-                req.user_uuid = decoded.uuid
+                req.user_id = decoded.id
 
                 next()
 
@@ -43,7 +42,7 @@ export const userAuth = (req: Request, res: Response, next: NextFunction) => {
                 throw new ErrorHandler(401, "Non-admin users can only access their own data")
             }
         })
-        
+
     } catch (error) {
 
         next(error)

@@ -11,6 +11,7 @@ declare global {
 }
 
 export const validateNewUser = (schema: SchemaOf<IUserCreate>) => async (req: Request, res: Response, next: NextFunction) => {
+   
     try {
 
         const data = req.body

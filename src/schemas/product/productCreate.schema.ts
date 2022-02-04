@@ -11,7 +11,7 @@ const productCreateSchema: SchemaOf<IProductCreate> = yup.object().shape({
     price: yup
         .number().positive().required(),
     in_stock: yup
-        .number().positive().required(),
+        .number().positive().integer().required(),
 })
 
 export default productCreateSchema
