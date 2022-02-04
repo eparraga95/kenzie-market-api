@@ -4,7 +4,6 @@
 
 import { UserRepository } from "../../repositories/user.repository";
 import { getCustomRepository } from "typeorm"
-import { ErrorHandler } from "../../errors/error";
 
 class userListService {
 

@@ -1,6 +1,5 @@
 
 import { Request, Response } from "express"
-import { ErrorHandler, handleError } from "../../errors/error"
 import { ISafeUser } from "../../interfaces/user/user.interface"
 import userListService from "../../services/user/userList.service"
 

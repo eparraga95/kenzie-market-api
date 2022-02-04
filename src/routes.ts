@@ -11,7 +11,7 @@ import userListController from "./controllers/user/userList.controller"
 
 // product
 import productCreateController from "./controllers/product/productCreate.controller"
-
+import productListController from "./controllers/product/productList.controller"
 
 // middlewares and schemas
 // =======================
@@ -44,6 +44,8 @@ const userListControl = new userListController()
 
 // product
 const productCreateControl = new productCreateController()
+const productListControl = new productListController()
+
 
 
 
@@ -58,5 +60,7 @@ router.get('/user', [userIsAdmin], userListControl.handle)
 
 // product
 router.post('/product', [userIsAdmin, validateNewProduct(productCreateSchema)], productCreateControl.handle)
+router.get('/product', [userAuth], productListControl.handle)
+
 
 export default router
