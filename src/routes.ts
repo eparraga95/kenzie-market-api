@@ -16,6 +16,8 @@ import productByIdController from "./controllers/product/productById.controller"
 
 // cart
 import cartAddProdController from "./controllers/cart/cartAddProd.controller"
+import cartByUserIdController from "./controllers/cart/cartByUserId.controller"
+import cartListController from "./controllers/cart/cartList.controller"
 
 // middlewares and schemas
 // =======================
@@ -29,6 +31,7 @@ import userLoginSchema from "./schemas/user/userLogin.schema"
 
 import { userAuth } from "./middlewares/user/userAuth.middleware"
 import { userIsAdmin } from "./middlewares/user/userIsAdmin.middleware"
+import { userIsLoggedIn } from "./middlewares/user/userIsLoggedIn.middleware"
 
 // product
 import { validateNewProduct } from "./middlewares/product/validateProdCreate.middleware"
@@ -56,6 +59,8 @@ const productByIdControl = new productByIdController()
 
 // cart
 const cartAddProdControl = new cartAddProdController()
+const cartByUserIdControl = new cartByUserIdController()
+const cartListControl = new cartListController()
 
 
 
@@ -66,15 +71,17 @@ const cartAddProdControl = new cartAddProdController()
 // user
 router.post('/user', [validateNewUser(userCreateSchema)], userCreateControl.handle)
 router.post('/login', [validateLogin(userLoginSchema)], userLoginControl.handle)
-router.get('/user/:id', [userAuth], userByIdControl.handle)
+router.get('/user/:user_id', [userAuth], userByIdControl.handle)
 router.get('/user', [userIsAdmin], userListControl.handle)
 
 // product
 router.post('/product', [userIsAdmin, validateNewProduct(productCreateSchema)], productCreateControl.handle)
-router.get('/product', [userAuth], productListControl.handle)
-router.get('/product/:product_id', [userAuth], productByIdControl.handle)
+router.get('/product', [userIsLoggedIn], productListControl.handle)
+router.get('/product/:product_id', [userIsLoggedIn], productByIdControl.handle)
 
 // cart
-router.post('/cart', [userAuth, validateAddProd(productAddSchema)], cartAddProdControl.handle)
+router.post('/cart', [userIsLoggedIn, validateAddProd(productAddSchema)], cartAddProdControl.handle)
+router.get('/cart/:user_id', [userAuth], cartByUserIdControl.handle)
+router.get('/cart', [userIsAdmin], cartListControl.handle)
 
 export default router

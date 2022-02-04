@@ -11,11 +11,9 @@ declare global {
     }
 }
 
-export const userAuth = (req: Request, res: Response, next: NextFunction) => {
+export const userIsLoggedIn= (req: Request, res: Response, next: NextFunction) => {
 
     try {
-
-        const { user_id } = req.params
 
         const headerAuth = req.headers.authorization
 
@@ -31,15 +29,12 @@ export const userAuth = (req: Request, res: Response, next: NextFunction) => {
                 throw new ErrorHandler(401, "Invalid token")
             }
 
-            if (user_id === decoded.id || decoded.isAdm) {
+            if (decoded.id) {
 
                 req.user_id = decoded.id
 
                 next()
 
-            } else {
-
-                throw new ErrorHandler(401, "Non-admin users can only access their own data")
             }
         })
 
