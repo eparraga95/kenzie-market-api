@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Product } from "./product.entity";
 import { v4 as uuid } from "uuid"
 
@@ -9,9 +9,12 @@ export class Cart {
     readonly id: string
 
     @ManyToMany(type => Product, {
-        eager: true
+        eager: true,
     }) @JoinTable()
     products: Product[]
+
+    @Column("float")
+    subtotal: number
     
     constructor() {
         if (!this.id) {

@@ -12,6 +12,10 @@ import userListController from "./controllers/user/userList.controller"
 // product
 import productCreateController from "./controllers/product/productCreate.controller"
 import productListController from "./controllers/product/productList.controller"
+import productByIdController from "./controllers/product/productById.controller"
+
+// cart
+import cartAddProdController from "./controllers/cart/cartAddProd.controller"
 
 // middlewares and schemas
 // =======================
@@ -30,6 +34,9 @@ import { userIsAdmin } from "./middlewares/user/userIsAdmin.middleware"
 import { validateNewProduct } from "./middlewares/product/validateProdCreate.middleware"
 import productCreateSchema from "./schemas/product/productCreate.schema"
 
+// cart
+import { validateAddProd } from "./middlewares/cart/validateProductAdd.middleware"
+import productAddSchema from "./schemas/cart/productAdd.schema"
 
 const router = Router()
 
@@ -45,6 +52,10 @@ const userListControl = new userListController()
 // product
 const productCreateControl = new productCreateController()
 const productListControl = new productListController()
+const productByIdControl = new productByIdController()
+
+// cart
+const cartAddProdControl = new cartAddProdController()
 
 
 
@@ -61,6 +72,9 @@ router.get('/user', [userIsAdmin], userListControl.handle)
 // product
 router.post('/product', [userIsAdmin, validateNewProduct(productCreateSchema)], productCreateControl.handle)
 router.get('/product', [userAuth], productListControl.handle)
+router.get('/product/:product_id', [userAuth], productByIdControl.handle)
 
+// cart
+router.post('/cart', [userAuth, validateAddProd(productAddSchema)], cartAddProdControl.handle)
 
 export default router

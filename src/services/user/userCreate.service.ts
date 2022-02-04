@@ -24,6 +24,7 @@ class userCreateService {
 
         const cart = new Cart()
         cart.products = []
+        cart.subtotal = 0
 
         cartRepository.create(cart)
         await cartRepository.save(cart)

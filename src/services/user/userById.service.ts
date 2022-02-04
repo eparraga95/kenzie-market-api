@@ -13,7 +13,6 @@ class userByIdService {
         const userRepository = getCustomRepository(UserRepository)
 
         const user = await userRepository.findOne({ id: id })
-        console.log(user)
 
         if (!user) {
             throw new ErrorHandler(404, "User not found.")

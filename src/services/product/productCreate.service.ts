@@ -12,32 +12,24 @@ class productCreateService {
 
     async execute({ name, description, price, in_stock}: IProductCreate) {
 
-        try {
+        const productRepository = getCustomRepository(ProductRepository)
 
-            const productRepository = getCustomRepository(ProductRepository)
+        const productAlreadyExists = await productRepository.findOne({ name })
 
-            const productAlreadyExists = await productRepository.findOne({ name })
-
-            if (productAlreadyExists) {
-                throw new ErrorHandler(409, "Product already registered")
-            }
-
-            const product = new Product()
-            product.name = name
-            product.description = description
-            product.price = price
-            product.in_stock = in_stock
-
-            productRepository.create(product)
-            await productRepository.save(product)
-
-            return product
-            
-        } catch (error) {
-            console.log(error)
+        if (productAlreadyExists) {
+            throw new ErrorHandler(409, "Product already registered")
         }
 
-        
+        const product = new Product()
+        product.name = name
+        product.description = description
+        product.price = price
+        product.in_stock = in_stock
+
+        productRepository.create(product)
+        await productRepository.save(product)
+
+        return product
     }
 }
 
