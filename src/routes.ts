@@ -25,6 +25,9 @@ import buyCreateController from "./controllers/buy/buyCreate.controller"
 import buyByIdController from "./controllers/buy/buyById.controller"
 import buyListController from "./controllers/buy/buyList.controller"
 
+// mail
+import sendMailController from "./controllers/mail/sendMail.controller"
+
 // middlewares and schemas
 // =======================
 
@@ -46,6 +49,11 @@ import productCreateSchema from "./schemas/product/productCreate.schema"
 // cart
 import { validateAddProd } from "./middlewares/cart/validateProductAdd.middleware"
 import productAddSchema from "./schemas/cart/productAdd.schema"
+
+// mail
+
+import { validateNewEmail } from "./middlewares/mail/validateMail.middleware"
+import mailSchema from "./schemas/mail/mail.schema"
 
 const router = Router()
 
@@ -74,6 +82,9 @@ const buyCreateControl = new buyCreateController()
 const buyByIdControl = new buyByIdController()
 const buyListControl = new buyListController()
 
+//mail
+
+const sendMailControl = new sendMailController()
 
 // routing
 // =======================
@@ -99,5 +110,8 @@ router.delete('/cart/:product_id', [userIsLoggedIn], cartDelProdControl.handle)
 router.post('/buy', [userIsLoggedIn], buyCreateControl.handle)
 router.get('/buy/:buy_id', [userIsLoggedIn], buyByIdControl.handle)
 router.get('/buy', [userIsAdmin], buyListControl.handle)
+
+// mail
+router.post('/email', [validateNewEmail(mailSchema), userIsAdmin], sendMailControl.handle)
 
 export default router

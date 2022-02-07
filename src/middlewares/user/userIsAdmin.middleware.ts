@@ -3,6 +3,14 @@ import { ErrorHandler } from '../../errors/error'
 import jwt from "jsonwebtoken";
 import { config } from '../../config/jwt.config'
 
+declare global {
+    namespace Express {
+      interface Request {
+        admin_id: string,
+      }
+    }
+}
+
 export const userIsAdmin = (req: Request, res: Response, next: NextFunction) => {
 
     try {
@@ -22,6 +30,8 @@ export const userIsAdmin = (req: Request, res: Response, next: NextFunction) => 
             }
 
             if (decoded.isAdm) {
+
+                req.admin_id = decoded.id
 
                 next()
 
