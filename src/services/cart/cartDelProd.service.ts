@@ -23,14 +23,12 @@ class cartDelProdService {
                 throw new ErrorHandler(404, "Product is not in the cart.")
             }
 
-            cart.products.filter(prod => prod.id !== product_id)
+            cart.products = cart.products.filter(prod => prod.id !== product_id)
             cart.subtotal = fixedFloat(cart.products.reduce((acc, prod) => acc + prod.price, 0))
 
             await cartRepository.save(cart)
 
-            const updatedCart = await cartRepository.findOne({ id: cart.id })
-
-            return updatedCart
+            return 
 
         }
 

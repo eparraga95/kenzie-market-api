@@ -18,6 +18,12 @@ import productByIdController from "./controllers/product/productById.controller"
 import cartAddProdController from "./controllers/cart/cartAddProd.controller"
 import cartByUserIdController from "./controllers/cart/cartByUserId.controller"
 import cartListController from "./controllers/cart/cartList.controller"
+import cartDelProdController from "./controllers/cart/cartDelProd.controller"
+
+// buy
+import buyCreateController from "./controllers/buy/buyCreate.controller"
+import buyByIdController from "./controllers/buy/buyById.controller"
+import buyListController from "./controllers/buy/buyList.controller"
 
 // middlewares and schemas
 // =======================
@@ -61,8 +67,12 @@ const productByIdControl = new productByIdController()
 const cartAddProdControl = new cartAddProdController()
 const cartByUserIdControl = new cartByUserIdController()
 const cartListControl = new cartListController()
+const cartDelProdControl = new cartDelProdController()
 
-
+// buy
+const buyCreateControl = new buyCreateController()
+const buyByIdControl = new buyByIdController()
+const buyListControl = new buyListController()
 
 
 // routing
@@ -83,5 +93,11 @@ router.get('/product/:product_id', [userIsLoggedIn], productByIdControl.handle)
 router.post('/cart', [userIsLoggedIn, validateAddProd(productAddSchema)], cartAddProdControl.handle)
 router.get('/cart/:user_id', [userAuth], cartByUserIdControl.handle)
 router.get('/cart', [userIsAdmin], cartListControl.handle)
+router.delete('/cart/:product_id', [userIsLoggedIn], cartDelProdControl.handle)
+
+// buy
+router.post('/buy', [userIsLoggedIn], buyCreateControl.handle)
+router.get('/buy/:buy_id', [userIsLoggedIn], buyByIdControl.handle)
+router.get('/buy', [userIsAdmin], buyListControl.handle)
 
 export default router

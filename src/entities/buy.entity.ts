@@ -17,6 +17,9 @@ export class Buy {
     }) @JoinTable()
     products: Product[]
 
+    @Column("float")
+    total: number
+
     constructor() {
         if (!this.id) {
             this.id = uuid();

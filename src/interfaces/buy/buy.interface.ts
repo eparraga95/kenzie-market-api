@@ -4,5 +4,6 @@ import { IUser } from "../user/user.interface";
 export interface IBuy {
     id: string,
     user: IUser,
-    products: IProduct[]
+    products: IProduct[],
+    total: number
 }
