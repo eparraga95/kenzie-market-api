@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryColumn, OneToOne, OneToMany, JoinColumn } from "
 import { Cart } from "./cart.entity";
 import { Buy } from "./buy.entity";
 import { v4 as uuid } from "uuid";
+import { ResetToken } from "./reset_token.entity";
 
 @Entity()
 export class User {
