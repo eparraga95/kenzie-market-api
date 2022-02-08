@@ -92,7 +92,6 @@ const buyByIdControl = new buyByIdController()
 const buyListControl = new buyListController()
 
 //mail
-
 const sendMailControl = new sendMailController()
 
 // routing

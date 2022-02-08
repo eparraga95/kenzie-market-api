@@ -1,6 +1,5 @@
 import { Request, Response } from "express"
 import { ErrorHandler, handleError } from "../../errors/error"
-import { IMailInput } from "../../interfaces/mail/mail.interface"
 import sendMailService from "../../services/mail/sendMail.service"
 
 class sendMailController {

@@ -26,13 +26,15 @@ class userChangePwdService {
 
                 throw new ErrorHandler(401, "Invalid recovery token.")
             }
+
+            let userId = userToken.user.id
             
-            const user = await userRepository.findOne({ where: { id : userToken.user.id } })
+            const user = await userRepository.findOne({ where: { id : userId } })
 
             if (user) {
 
                 user.password = await bcrypt.hash(new_password, 10)
-
+                
                 await userRepository.save(user)
 
                 await resetTokenRepository.delete(userToken)

@@ -14,7 +14,9 @@ export class ResetToken {
     @Column()
     created_at: Date
 
-    @OneToOne((type) => User)@JoinColumn()
+    @OneToOne((type) => User, {
+        eager: true
+    })@JoinColumn()
     user: User
 
     constructor() {
