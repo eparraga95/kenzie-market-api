@@ -6,6 +6,9 @@ import { getCustomRepository } from "typeorm";
 import { ErrorHandler } from "../../errors/error";
 import { IMailInput } from "../../interfaces/mail/mail.interface";
 import { NodemailerExpressHandlebarsOptions } from 'nodemailer-express-handlebars'
+import dotenv from "dotenv"
+
+dotenv.config()
 
 class sendMailService {
 
@@ -27,8 +30,8 @@ class sendMailService {
                 host: "smtp.mailtrap.io",
                 port: 2525,
                 auth: {
-                  user: "5ca342b0979bba",
-                  pass: "5a6dd4bd89faa4",
+                  user: process.env.NODEMAILER_USER,
+                  pass: process.env.NODEMAILER_PASS,
                 },
             })
 

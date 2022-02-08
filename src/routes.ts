@@ -8,6 +8,8 @@ import userCreateController from "./controllers/user/userCreate.controller"
 import userLoginController from "./controllers/user/userLogin.controller"
 import userByIdController from "./controllers/user/userById.controller"
 import userListController from "./controllers/user/userList.controller"
+import userRecoverPwdController from "./controllers/user/userRecoverPwd.controller"
+import userChangePwdController from "./controllers/user/userChangePwd.controller"
 
 // product
 import productCreateController from "./controllers/product/productCreate.controller"
@@ -38,6 +40,12 @@ import userCreateSchema from "./schemas/user/userCreate.schema"
 import { validateLogin } from "./middlewares/user/validateLogin.middleware"
 import userLoginSchema from "./schemas/user/userLogin.schema"
 
+import { validateRecover } from "./middlewares/user/validateRecover.middleware"
+import userRecoverSchema from "./schemas/user/userRecoverPwd.schema"
+
+import { validateChangePwd } from "./middlewares/user/validateChangePwd.middleware"
+import userChangePwdSchema from "./schemas/user/userChangePwd.schema"
+
 import { userAuth } from "./middlewares/user/userAuth.middleware"
 import { userIsAdmin } from "./middlewares/user/userIsAdmin.middleware"
 import { userIsLoggedIn } from "./middlewares/user/userIsLoggedIn.middleware"
@@ -51,7 +59,6 @@ import { validateAddProd } from "./middlewares/cart/validateProductAdd.middlewar
 import productAddSchema from "./schemas/cart/productAdd.schema"
 
 // mail
-
 import { validateNewEmail } from "./middlewares/mail/validateMail.middleware"
 import mailSchema from "./schemas/mail/mail.schema"
 
@@ -65,6 +72,8 @@ const userCreateControl = new userCreateController()
 const userLoginControl = new userLoginController()
 const userByIdControl = new userByIdController()
 const userListControl = new userListController()
+const userRecoverPwdControl = new userRecoverPwdController()
+const userChangePwdControl = new userChangePwdController()
 
 // product
 const productCreateControl = new productCreateController()
@@ -92,6 +101,8 @@ const sendMailControl = new sendMailController()
 // user
 router.post('/user', [validateNewUser(userCreateSchema)], userCreateControl.handle)
 router.post('/login', [validateLogin(userLoginSchema)], userLoginControl.handle)
+router.post('/recover', [validateRecover(userRecoverSchema)], userRecoverPwdControl.handle)
+router.post('/change_password', [validateChangePwd(userChangePwdSchema)], userChangePwdControl.handle)
 router.get('/user/:user_id', [userAuth], userByIdControl.handle)
 router.get('/user', [userIsAdmin], userListControl.handle)
 

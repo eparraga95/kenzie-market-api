@@ -11,6 +11,9 @@ export class ResetToken {
     @Column()
     token: string
 
+    @Column()
+    created_at: Date
+
     @OneToOne((type) => User)@JoinColumn()
     user: User
 

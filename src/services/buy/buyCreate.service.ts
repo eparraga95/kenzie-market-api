@@ -8,6 +8,10 @@ import nodemailer from "nodemailer";
 import hbs from 'nodemailer-express-handlebars'
 import path from "path";
 import { NodemailerExpressHandlebarsOptions } from 'nodemailer-express-handlebars'
+import dotenv from "dotenv"
+
+dotenv.config()
+
 
 class buyCreateService {
 
@@ -72,8 +76,8 @@ class buyCreateService {
                 host: "smtp.mailtrap.io",
                 port: 2525,
                 auth: {
-                  user: "5ca342b0979bba",
-                  pass: "5a6dd4bd89faa4",
+                  user: process.env.NODEMAILER_USER,
+                  pass: process.env.NODEMAILER_PASS,
                 },
             })
 

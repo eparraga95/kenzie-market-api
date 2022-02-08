@@ -30,3 +30,13 @@ export interface IUserLogin {
     email: string,
     password: string
 }
+
+export interface IUserRecover {
+    email: string,
+}
+
+export interface IUserChangePwd {
+    token: string,
+    new_password: string,
+    new_password_confirm: string
+}
