@@ -7,15 +7,15 @@ class userByIdController {
 
     async handle(req: Request, res: Response) {
 
-        const id = req.user_id
+        const { user_id } = req.params
 
         const userById = new userByIdService()
 
         try {
 
-            const userData: ISafeUser = await userById.execute(id)
+            const userData: ISafeUser | undefined = await userById.execute(user_id)
 
-            delete userData.password
+            delete userData?.password
 
             return res.json(userData)
 

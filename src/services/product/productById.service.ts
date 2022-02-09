@@ -12,6 +12,14 @@ class productByIdService {
 
         const productRepository = getCustomRepository(ProductRepository)
 
+        const uuidRegex = /\b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b/gm
+
+        const isValid = uuidRegex.test(product_id)
+
+        if (!isValid) {
+            throw new ErrorHandler(400, "Invalid Id")
+        }
+
         const product = await productRepository.findOne({ id: product_id })
 
         if (!product) {

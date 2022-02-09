@@ -19,7 +19,7 @@ class userCreateService {
         const emailAlreadyExists = await userRepository.findOne({ email })
 
         if (emailAlreadyExists) {
-            throw new ErrorHandler(409, "E-mail already registered")
+            throw new ErrorHandler(409, "E-mail already registered.")
         }
 
         const cart = new Cart()

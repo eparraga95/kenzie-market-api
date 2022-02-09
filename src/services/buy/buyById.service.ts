@@ -8,6 +8,14 @@ class buyByIdService {
 
         const buyRepository = getCustomRepository(BuyRepository)
 
+        const uuidRegex = /\b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b/gm
+
+        const isValid = uuidRegex.test(buy_id)
+
+        if (!isValid) {
+            throw new ErrorHandler(400, "Invalid Id")
+        }
+
         const buy = await buyRepository.findOne({ id: buy_id })
 
         if (!buy) {

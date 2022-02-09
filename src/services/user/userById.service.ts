@@ -12,8 +12,15 @@ class userByIdService {
 
         const userRepository = getCustomRepository(UserRepository)
 
-        const user = await userRepository.findOne({ id: id })
+        const uuidRegex = /\b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b/gm
 
+        const isValid = uuidRegex.test(id)
+
+        if (!isValid) {
+            throw new ErrorHandler(400, "Invalid Id")
+        }
+
+        const user = await userRepository.findOne({ id: id })
         if (!user) {
             throw new ErrorHandler(404, "User not found.")
         }

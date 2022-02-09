@@ -14,7 +14,7 @@ class userRecoverPwdController {
 
             const recover = await userRecoverPwd.execute(email)
 
-            res.json(recover)
+            res.status(201).json({ message: recover })
 
         } catch (error) {
 

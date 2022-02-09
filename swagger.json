@@ -1,0 +1,279 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Kenzie Market",
+    "description": "An API to solve an E-Commerce, made for didactic purposes",
+    "contact": {
+      "name": "Eduardo Parraga",
+      "email": "eduardo.parraga95@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+
+  "servers": [
+    {
+      "url": "http://localhost:3000/api-documentation",
+      "description": "test"
+    }
+  ],
+  "paths": {
+    "/user": {
+      "post": {
+        "description": "Create an User",
+        "tags": ["User"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UserCreate" },
+              "example": {
+                "name": "Eduardo",
+                "email": "eduardo2@mail.com",
+                "password": "123456",
+                "isAdm": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "schema": {
+                "example": {
+                  "error": "isAdm is a required field"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "schema": {
+                "example": {
+                  "status": "error",
+                  "statusCode": 409,
+                  "message": "E-mail already registered."
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "schema": {
+                "example": {
+                  "id": "3ff388d6-ecaa-48f4-88c9-56349acee9ad",
+                  "name": "Eduardo",
+                  "email": "eduardo2@mail.com",
+                  "isAdm": true,
+                  "cart": {
+                    "id": "7b60fe3e-b200-4064-b7b8-1f0568d3c348",
+                    "products": [],
+                    "subtotal": 0
+                  },
+                  "buys": []
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "List all users",
+        "tags": ["User"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "schema": {
+                "example": [
+                  {
+                    "id": "f957c658-5f52-4e33-af01-3fd8ab031a58",
+                    "name": "Arnaldo",
+                    "email": "arnaldo@mail.com",
+                    "isAdm": false,
+                    "buys": [],
+                    "cart": {
+                      "id": "dac7350c-8041-427d-8f5e-812d6c7d170b",
+                      "subtotal": 0,
+                      "products": []
+                    }
+                  },
+                  {
+                    "id": "67b65f70-76f9-4fbe-ba42-fbc265d9a15c",
+                    "name": "Eduardo",
+                    "email": "eduardo@mail.com",
+                    "isAdm": true,
+                    "buys": [],
+                    "cart": {
+                      "id": "d6946d79-9fff-4fa3-a4d8-3afa40733ad5",
+                      "subtotal": 0,
+                      "products": []
+                    }
+                  },
+                  {
+                    "id": "3ff388d6-ecaa-48f4-88c9-56349acee9ad",
+                    "name": "Eduardo",
+                    "email": "eduardo2@mail.com",
+                    "isAdm": true,
+                    "buys": [],
+                    "cart": {
+                      "id": "7b60fe3e-b200-4064-b7b8-1f0568d3c348",
+                      "subtotal": 0,
+                      "products": []
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "schema": {
+                "example": {
+                  "status": "error",
+                  "statusCode": 401,
+                  "message": "Missing authorization headers"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/:id": {
+      "get": {
+        "description": "Retrieve user data by its ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["User"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "schema": {
+                "example": {
+                  "id": "f957c658-5f52-4e33-af01-3fd8ab031a58",
+                  "name": "Arnaldo",
+                  "email": "arnaldo@mail.com",
+                  "isAdm": false,
+                  "buys": [],
+                  "cart": {
+                    "id": "dac7350c-8041-427d-8f5e-812d6c7d170b",
+                    "subtotal": 0,
+                    "products": []
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "schema": {
+                "example": {
+                  "status": "error",
+                  "statusCode": 401,
+                  "message": "Missing authorization headers"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "schema": {
+                "example": {
+                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "description": "User is given an access token.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["User"],
+        "responses": {
+          "201": {}
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UserCreate": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "isAdm": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "YupError": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
