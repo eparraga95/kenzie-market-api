@@ -5,7 +5,7 @@ import dotenv from "dotenv"
 
 dotenv.config()
 
-const PORT = process.env.SERVER_PORT
+const PORT = process.env.SERVER_PORT || 3000
 
 createConnection().then( () => {
 
