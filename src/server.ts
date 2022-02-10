@@ -5,13 +5,11 @@ import dotenv from "dotenv"
 
 dotenv.config()
 
-const PORT = process.env.SERVER_PORT || 3000
-
 createConnection().then( () => {
 
     console.log("Database connected!");
 
-    app.listen(PORT, () => {
+    app.listen(process.env.PORT || 3000, () => {
         console.log("Server running!");
     })
 
