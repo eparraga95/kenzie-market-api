@@ -12,7 +12,7 @@ class userRecoverPwdController {
 
             const userRecoverPwd = new userRecoverPwdService()
 
-            const recover = await userRecoverPwd.execute(email)
+            const recover: string = await userRecoverPwd.execute(email)
 
             res.status(201).json({ message: recover })
 

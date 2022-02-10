@@ -12,7 +12,7 @@ class userLoginController {
 
             const userLogin = new userLoginService()
 
-            const token = await userLogin.execute({ email, password })
+            const token: string = await userLogin.execute({ email, password })
 
             return res.status(200).json({token: token})
 

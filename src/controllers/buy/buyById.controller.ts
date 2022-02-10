@@ -1,6 +1,7 @@
 import { Request, Response } from "express"
 import { ErrorHandler, handleError } from "../../errors/error"
 import buyByIdService from "../../services/buy/buyById.service"
+import { IBuy } from "../../interfaces/buy/buy.interface"
 
 class buyByIdController {
 
@@ -12,7 +13,7 @@ class buyByIdController {
 
         try {
 
-            const buy = await buyById.execute(buy_id)
+            const buy: IBuy = await buyById.execute(buy_id)
 
             return res.json(buy)
 

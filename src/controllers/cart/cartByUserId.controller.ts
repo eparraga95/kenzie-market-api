@@ -1,5 +1,6 @@
 import { Request, Response } from "express"
 import { ErrorHandler, handleError } from "../../errors/error"
+import { ICart } from "../../interfaces/cart/cart.interface"
 import cartByUserIdService from "../../services/cart/cartByUserId.service"
 
 class cartByUserIdController {
@@ -12,7 +13,7 @@ class cartByUserIdController {
 
         try {
 
-            const user_cart = await cartByUserId.execute(user_id)
+            const user_cart: ICart | undefined = await cartByUserId.execute(user_id)
 
             return res.json(user_cart)
         

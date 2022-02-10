@@ -1,5 +1,6 @@
 import { Request, Response } from "express"
 import { ErrorHandler, handleError } from "../../errors/error"
+import { IBuy } from "../../interfaces/buy/buy.interface"
 import buyCreateService from "../../services/buy/buyCreate.service"
 
 class buyCreateController {
@@ -12,13 +13,13 @@ class buyCreateController {
 
             const buyCreate = new buyCreateService()
 
-            const buy = await buyCreate.execute(user_id)
+            const buy: IBuy | undefined = await buyCreate.execute(user_id)
 
             if (buy) {
 
-                const { user, ...buyDataWithouUser} = buy
+                const { user, ...buyDataWithoutUser } = buy
                 
-                return res.status(201).json(buyDataWithouUser)
+                return res.status(201).json(buyDataWithoutUser)
             }
 
         } catch (error) {

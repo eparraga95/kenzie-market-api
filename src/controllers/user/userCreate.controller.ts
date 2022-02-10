@@ -1,5 +1,6 @@
 import { Request, Response } from "express"
 import { ErrorHandler, handleError } from "../../errors/error"
+import { IUser } from "../../interfaces/user/user.interface"
 import userCreateService from "../../services/user/userCreate.service"
 
 class userCreateController {
@@ -12,7 +13,7 @@ class userCreateController {
 
             const userCreate = new userCreateService()
 
-            const user = await userCreate.execute(data)
+            const user: IUser = await userCreate.execute(data)
 
             const { password, ...safeUser } = user
 

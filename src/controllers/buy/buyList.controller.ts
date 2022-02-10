@@ -1,4 +1,5 @@
 import { Request, Response } from "express"
+import { IBuy } from "../../interfaces/buy/buy.interface"
 import buyListService from "../../services/buy/buyList.service"
 
 class buyListController {
@@ -7,7 +8,7 @@ class buyListController {
 
         const buyList = new buyListService()
 
-        const buys = await buyList.execute()
+        const buys: IBuy[] = await buyList.execute()
 
         return res.json(buys)
 

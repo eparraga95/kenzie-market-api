@@ -1,4 +1,5 @@
 import { Request, Response } from "express"
+import { ICart } from "../../interfaces/cart/cart.interface"
 import cartListService from "../../services/cart/cartList.service"
 
 class cartListController {
@@ -7,7 +8,7 @@ class cartListController {
 
         const cartList = new cartListService ()
 
-        const carts = await cartList.execute()
+        const carts: ICart[] = await cartList.execute()
 
         return res.json(carts)
     }

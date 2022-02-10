@@ -12,7 +12,7 @@ class userChangePwdController {
 
             const userChangePwd = new userChangePwdService()
 
-            const changed = await userChangePwd.execute(token, new_password)
+            const changed: string | undefined = await userChangePwd.execute(token, new_password)
 
             res.json({ message: changed })
 

@@ -1,5 +1,6 @@
 import { Request, Response } from "express"
 import { ErrorHandler, handleError } from "../../errors/error"
+import { IProduct } from "../../interfaces/product/product.interface"
 import productCreateService from "../../services/product/productCreate.service"
 
 class productCreateController {
@@ -12,7 +13,7 @@ class productCreateController {
 
             const productCreate = new productCreateService()
 
-            const product = await productCreate.execute(data)
+            const product: IProduct = await productCreate.execute(data)
 
             return res.status(201).json(product)
 
