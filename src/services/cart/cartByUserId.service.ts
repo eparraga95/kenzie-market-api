@@ -18,7 +18,7 @@ class cartByUserIdService {
         const isValid = uuidRegex.test(user_id)
 
         if (!isValid) {
-            throw new ErrorHandler(400, "Invalid Id")
+            throw new ErrorHandler(400, "Invalid user id")
         }
 
         const user = await userRepository.findOne({ id: user_id })

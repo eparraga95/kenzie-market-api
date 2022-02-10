@@ -15,6 +15,14 @@ class cartDelProdService {
 
         const cartRepository = getCustomRepository(CartRepository)
 
+        const uuidRegex = /\b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b/gm
+
+        const isValid = uuidRegex.test(product_id)
+
+        if (!isValid) {
+            throw new ErrorHandler(400, "Invalid product id")
+        }
+        
         const cart = await cartRepository.findOne({ id: user?.cart.id })
 
         if (cart) {

@@ -13,7 +13,7 @@ class buyByIdService {
         const isValid = uuidRegex.test(buy_id)
 
         if (!isValid) {
-            throw new ErrorHandler(400, "Invalid Id")
+            throw new ErrorHandler(400, "Invalid buy id")
         }
 
         const buy = await buyRepository.findOne({ id: buy_id })

@@ -17,7 +17,7 @@ class productCreateService {
         const productAlreadyExists = await productRepository.findOne({ name })
 
         if (productAlreadyExists) {
-            throw new ErrorHandler(409, "Product already registered")
+            throw new ErrorHandler(409, "Product already registered.")
         }
 
         const product = new Product()

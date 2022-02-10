@@ -24,7 +24,9 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/UserCreate" },
+              "schema": {
+                "$ref": "#/components/schemas/UserCreate"
+              },
               "example": {
                 "name": "Eduardo",
                 "email": "eduardo2@mail.com",
@@ -186,6 +188,18 @@
               }
             }
           },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "schema": {
+                "example": {
+                  "status": "error",
+                  "statusCode": 400,
+                  "message": "Invalid Id"
+                }
+              }
+            }
+          },
           "401": {
             "description": "Unauthorized",
             "content": {
@@ -203,7 +217,9 @@
             "content": {
               "schema": {
                 "example": {
-                  
+                  "status": "error",
+                  "statusCode": 404,
+                  "message": "User not found."
                 }
               }
             }
@@ -214,19 +230,746 @@
     "/login": {
       "post": {
         "description": "User is given an access token.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLogin"
+              },
+              "example": {
+                "email": "eduardo2@mail.com",
+                "password": "123456"
+              }
+            }
+          }
+        },
+        "tags": ["User"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "schema": {
+                "example": {
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YjY1ZjcwLTc2ZjktNGZiZS1iYTQyLWZiYzI2NWQ5YTE1YyIsIm5hbWUiOiJFZHVhcmRvIiwiZW1haWwiOiJlZHVhcmRvQG1haWwuY29tIiwiaXNBZG0iOnRydWUsImlhdCI6MTY0NDQxMzczMCwiZXhwIjoxNjQ0NTAwMTMwfQ.2sZnpiZOLURth-4NbgQBykwHI4WWeYHrjUoQI601OIk"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "schema": {
+                "example": {
+                  "status": "error",
+                  "statusCode": 401,
+                  "message": "Wrong email/password"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "schema": {
+                "example": {
+                  "status": "error",
+                  "statusCode": 404,
+                  "message": "User not found."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recover": {
+      "post": {
+        "description": "Send an email to the User with a token to be used in order to change its password using the /change_password route.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRecover"
+              },
+              "example": {
+                "email": "eduardo2@mail.com"
+              }
+            }
+          }
+        },
+        "tags": ["User"],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "schema": {
+                "example": {
+                  "message": "An e-mail was sent to you with a password recover token."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "schema": {
+                "example": {
+                  "status": "error",
+                  "statusCode": 404,
+                  "message": "User not found."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/change_password": {
+      "post": {
+        "description": "Changes the user password",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserChangePwd"
+              },
+              "example": {
+                "token": "$2a$10$WbVRMN2rQTYM7mSnGYF.1eYp8fL7FLL7JUhX.fC1CsY0R4Qi2rcNW",
+                "new_password": "1234",
+                "new_password_confirm": "1234"
+              }
+            }
+          }
+        },
+        "tags": ["User"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "schema": {
+                "example": {
+                  "message": "Password changed succesfully."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "schema": {
+                "example": {
+                  "status": "error",
+                  "statusCode": 404,
+                  "message": "User not found."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "schema": {
+                "example": {
+                  "status": "error",
+                  "statusCode": 401,
+                  "message": "Invalid recovery token."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product": {
+      "post": {
+        "description": "Creates a product",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductCreate"
+              },
+              "example": {
+                "name": "Product3",
+                "description": "Description3",
+                "price": 12.99,
+                "in_stock": 2
+              }
+            }
+          }
+        },
         "security": [
           {
             "bearerAuth": []
           }
         ],
-        "tags": ["User"],
+        "tags": ["Product"],
         "responses": {
-          "201": {}
+          "201": {
+            "description": "Created",
+            "content": {
+              "schema": {
+                "example": {
+                  "id": "1b7bddad-d921-4173-b3d7-7019494a1f07",
+                  "name": "Product3",
+                  "description": "Description3",
+                  "price": 12.99,
+                  "in_stock": 2
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "schema": {
+                "example": {
+                  "status": "error",
+                  "statusCode": 409,
+                  "message": "Product already registered"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "schema": {
+                "example": {
+                  "status": "error",
+                  "statusCode": 401,
+                  "message": "Unauthorized, user is not an Admin."
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Retrieve all products",
+        "tags": ["Product"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "schema": {
+                "example": [
+                  {
+                    "id": "5ec2b55b-7cbe-4267-923c-65ad058472f1",
+                    "name": "Product3",
+                    "description": "Description3",
+                    "price": 12.99,
+                    "in_stock": 2
+                  },
+                  {
+                    "id": "857730d2-20c3-42f4-9215-8c112595b19a",
+                    "name": "Product1",
+                    "description": "Description2",
+                    "price": 14.99,
+                    "in_stock": 22
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product/:product_id": {
+      "get": {
+        "description": "Retrieve a product by its Id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "product_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": ["Product"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "schema": {
+                "example": {
+                  "id": "5ec2b55b-7cbe-4267-923c-65ad058472f1",
+                  "name": "Product3",
+                  "description": "Description3",
+                  "price": 12.99,
+                  "in_stock": 2
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "schema": {
+                "example": {
+                  "status": "error",
+                  "statusCode": 400,
+                  "message": "Invalid Id"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "schema": {
+                "example": {
+                  "status": "error",
+                  "statusCode": 401,
+                  "message": "Missing authorization headers"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "schema": {
+                "example": {
+                  "status": "error",
+                  "statusCode": 404,
+                  "message": "Product not found."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cart": {
+      "post": {
+        "description": "Adds a product to the user's cart",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CartAddProduct"
+              },
+              "example": {
+                "product_id": "b4cb8fe9-acb3-4fb1-8ec2-a9e90926d3e6"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Cart"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "schema": {
+                "example": {
+                  "id": "dac7350c-8041-427d-8f5e-812d6c7d170b",
+                  "subtotal": 12.99,
+                  "products": [
+                    {
+                      "id": "5ec2b55b-7cbe-4267-923c-65ad058472f1",
+                      "name": "Product3",
+                      "description": "Description3",
+                      "price": 12.99,
+                      "in_stock": 2
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "schema": {
+                "example": {
+                  "status": "error",
+                  "statusCode": 409,
+                  "message": "Invalid product id"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "schema": {
+                "example": {
+                  "status": "error",
+                  "statusCode": 404,
+                  "message": "Product not found."
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "schema": {
+                "example": {
+                  "status": "error",
+                  "statusCode": 409,
+                  "message": "Product is already in the cart."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "schema": {
+                "example": {
+                  "status": "error",
+                  "statusCode": 401,
+                  "message": "Missing authorization headers"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Retrieve all carts",
+        "tags": ["Cart"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "schema": {
+                "example": [
+                  {
+                    "id": "8f05eaae-80f2-4e8d-8352-f6594b8527fb",
+                    "subtotal": 27.98,
+                    "products": [
+                      {
+                        "id": "04eeb8b3-bd64-4569-ad47-bd29ffd12cf2",
+                        "name": "Product1",
+                        "description": "Description1",
+                        "price": 10.99,
+                        "in_stock": 20
+                      },
+                      {
+                        "id": "b4cb8fe9-acb3-4fb1-8ec2-a9e90926d3e6",
+                        "name": "Product2",
+                        "description": "Description2",
+                        "price": 16.99,
+                        "in_stock": 2
+                      }
+                    ]
+                  },
+                  {
+                    "id": "f924b4cc-97c7-4519-9ab1-7836728873d3",
+                    "subtotal": 0,
+                    "products": []
+                  }
+                ]
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "schema": {
+                "example": {
+                  "status": "error",
+                  "statusCode": 401,
+                  "message": "Missing authorization headers"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cart/:user_id": {
+      "get": {
+        "description": "Retrieve a cart by its user id",
+        "tags": ["Cart"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "schema": {
+                "example": [
+                  {
+                    "id": "8f05eaae-80f2-4e8d-8352-f6594b8527fb",
+                    "subtotal": 27.98,
+                    "products": [
+                      {
+                        "id": "04eeb8b3-bd64-4569-ad47-bd29ffd12cf2",
+                        "name": "Product1",
+                        "description": "Description1",
+                        "price": 10.99,
+                        "in_stock": 20
+                      },
+                      {
+                        "id": "b4cb8fe9-acb3-4fb1-8ec2-a9e90926d3e6",
+                        "name": "Product2",
+                        "description": "Description2",
+                        "price": 16.99,
+                        "in_stock": 2
+                      }
+                    ]
+                  },
+                  {
+                    "id": "f924b4cc-97c7-4519-9ab1-7836728873d3",
+                    "subtotal": 0,
+                    "products": []
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "schema": {
+                "example": {
+                  "status": "error",
+                  "statusCode": 409,
+                  "message": "Invalid user id"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "schema": {
+                "example": {
+                  "status": "error",
+                  "statusCode": 401,
+                  "message": "Non-admin users can only access their own data"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cart/:product_id": {
+      "delete": {
+        "description": "Remove a product from the user's cart",
+        "tags": ["Cart"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "product_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content"
+          },
+          "404": {
+            "description": "Bad Request",
+            "content": {
+              "schema": {
+                "example": {
+                  "status": "error",
+                  "statusCode": 409,
+                  "message": "Invalid product id"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "schema": {
+                "example": {
+                  "status": "error",
+                  "statusCode": 401,
+                  "message": "Missing authorization headers"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/buy": {
+      "post": {
+        "description": "Checks out a buy and sends an email to the user with the buy info.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": ["Buy"],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "schema": {
+                "example": {
+                  "id": "5c737511-31e1-457c-96c1-b64510e43dd4",
+                  "products": [
+                    {
+                      "id": "b4cb8fe9-acb3-4fb1-8ec2-a9e90926d3e6",
+                      "name": "Product2",
+                      "description": "Description2",
+                      "price": 16.99,
+                      "in_stock": 2
+                    }
+                  ],
+                  "total": 16.99
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "schema": {
+                "example": {
+                  "status": "error",
+                  "statusCode": 400,
+                  "message": "This cart is empty"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "schema": {
+                "example": {
+                  "status": "error",
+                  "statusCode": 401,
+                  "message": "Missing authorization headers"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Retrieve all buys",
+        "tags": ["Buy"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "schema": {
+                "example": [
+                  {
+                    "id": "f3328bc3-0f5a-4165-8e64-49ecd673d658",
+                    "total": 12.99,
+                    "products": [
+                      {
+                        "id": "5ec2b55b-7cbe-4267-923c-65ad058472f1",
+                        "name": "Product3",
+                        "description": "Description3",
+                        "price": 12.99,
+                        "in_stock": 2
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/buy/:buy_id": {
+      "get": {
+        "description": "Retrieve all buys",
+        "tags": ["Buy"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "schema": {
+                "example": {
+                  "id": "f3328bc3-0f5a-4165-8e64-49ecd673d658",
+                  "total": 12.99,
+                  "products": [
+                    {
+                      "id": "5ec2b55b-7cbe-4267-923c-65ad058472f1",
+                      "name": "Product3",
+                      "description": "Description3",
+                      "price": 12.99,
+                      "in_stock": 2
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "schema": {
+                "example": {
+                  "status": "error",
+                  "statusCode": 409,
+                  "message": "Invalid buy id"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Bad Request",
+            "content": {
+              "schema": {
+                "example": {
+                  "status": "error",
+                  "statusCode": 409,
+                  "message": "Invalid buy id"
+                }
+              }
+            }
+          }
         }
       }
     }
   },
   "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
     "schemas": {
       "UserCreate": {
         "type": "object",
@@ -245,34 +988,63 @@
           }
         }
       },
-      "Error": {
+      "UserLogin": {
         "type": "object",
         "properties": {
-          "status": {
+          "email": {
             "type": "string"
           },
-          "statusCode": {
-            "type": "integer"
-          },
-          "message": {
+          "password": {
             "type": "string"
           }
         }
       },
-      "YupError": {
+      "UserRecover": {
         "type": "object",
         "properties": {
-          "error": {
+          "email": {
             "type": "string"
           }
         }
-      }
-    },
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT"
+      },
+      "UserChangePwd": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          },
+          "new_password": {
+            "type": "string"
+          },
+          "new_password_confirm": {
+            "type": "string"
+          }
+        }
+      },
+      "ProductCreate": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "in_stock": {
+            "type": "integer"
+          }
+        }
+      },
+      "CartAddProduct": {
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "string"
+          }
+        }
       }
     }
   }

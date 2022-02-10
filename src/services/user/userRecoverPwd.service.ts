@@ -76,16 +76,16 @@ class userRecoverPwdService {
             }
         }
 
-        const sent = transport.sendMail(mailOptions, function(error, info){
+        transport.sendMail(mailOptions, function(error, info){
             
             if(error){
                 return console.log(error);
             }
 
-            return "An e-mail was sent to you with a password recover token."
+            return
         });
 
-        return sent
+        return "An e-mail was sent to you with a password recover token."
     }
 }
 

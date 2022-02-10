@@ -37,7 +37,7 @@ export const userIsAdmin = (req: Request, res: Response, next: NextFunction) => 
 
             } else {
 
-                throw new ErrorHandler(401, "Unauthorized")
+                throw new ErrorHandler(401, "Unauthorized, user is not an Admin.")
             }
         })
 
