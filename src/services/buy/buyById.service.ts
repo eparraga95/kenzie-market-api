@@ -19,7 +19,7 @@ class buyByIdService {
         const buy = await buyRepository.findOne({ id: buy_id })
 
         if (!buy) {
-            throw new ErrorHandler(404, "Buy not found.")
+            throw new ErrorHandler(404, "Buy not found")
         }
 
         return buy

@@ -39,7 +39,7 @@ class cartAddProdService {
         if (cart && product) {
             
             if (cart.products.filter(prod => prod.name === product.name).length > 0) {
-                throw new ErrorHandler(409, "Product is already in the cart.")
+                throw new ErrorHandler(409, "Product is already in the cart")
             }
 
             cart.products = [...cart.products, product]

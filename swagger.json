@@ -195,7 +195,7 @@
                 "example": {
                   "status": "error",
                   "statusCode": 400,
-                  "message": "Invalid Id"
+                  "message": "Invalid user id"
                 }
               }
             }
@@ -219,7 +219,7 @@
                 "example": {
                   "status": "error",
                   "statusCode": 404,
-                  "message": "User not found."
+                  "message": "User not found"
                 }
               }
             }
@@ -913,6 +913,11 @@
       "get": {
         "description": "Retrieve all buys",
         "tags": ["Buy"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -954,6 +959,57 @@
                   "status": "error",
                   "statusCode": 409,
                   "message": "Invalid buy id"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/mail": {
+      "get": {
+        "description": "Admin send an email to a user.",
+        "tags": ["Mail"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "schema": {
+                "example": {
+                  "id": "f3328bc3-0f5a-4165-8e64-49ecd673d658",
+                  "total": 12.99,
+                  "products": {
+                    "message": "Mail sent."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "schema": {
+                "example": {
+                  "status": "error",
+                  "statusCode": 409,
+                  "message": "User not found"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "schema": {
+                "example": {
+                  "status": "error",
+                  "statusCode": 409,
+                  "message": "Invalid user id"
                 }
               }
             }
@@ -1042,6 +1098,20 @@
         "type": "object",
         "properties": {
           "product_id": {
+            "type": "string"
+          }
+        }
+      },
+      "MailCreate": {
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "message": {
             "type": "string"
           }
         }

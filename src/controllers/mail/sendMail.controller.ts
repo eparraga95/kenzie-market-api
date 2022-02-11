@@ -16,7 +16,7 @@ class sendMailController {
             
             const mailResponse = await mailService.execute({ user_id, message, subject}, admin_id)
 
-            res.json(mailResponse)
+            res.json({message: mailResponse})
 
         } catch (error) {
 

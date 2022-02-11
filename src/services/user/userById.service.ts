@@ -17,12 +17,12 @@ class userByIdService {
         const isValid = uuidRegex.test(id)
 
         if (!isValid) {
-            throw new ErrorHandler(400, "Invalid Id")
+            throw new ErrorHandler(400, "Invalid user id")
         }
 
         const user = await userRepository.findOne({ id: id })
         if (!user) {
-            throw new ErrorHandler(404, "User not found.")
+            throw new ErrorHandler(404, "User not found")
         }
 
         return user

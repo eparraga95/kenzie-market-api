@@ -20,7 +20,7 @@ class userLoginService {
         const user = await userRepository.findOne({ email })
 
         if (!user) {
-            throw new ErrorHandler(404, "User not found.")
+            throw new ErrorHandler(404, "User not found")
         }
 
         const pwdMatch = await bcrypt.compare(password, user.password)

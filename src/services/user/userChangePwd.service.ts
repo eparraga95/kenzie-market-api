@@ -15,7 +15,7 @@ class userChangePwdService {
 
         if (!token) {
 
-            throw new ErrorHandler(401, "Invalid recovery token.")
+            throw new ErrorHandler(401, "Invalid recovery token")
         }
 
         if (userToken) {
@@ -24,7 +24,7 @@ class userChangePwdService {
 
             if (!isValid) {
 
-                throw new ErrorHandler(401, "Invalid recovery token.")
+                throw new ErrorHandler(401, "Invalid recovery token")
             }
 
             let userId = userToken.user.id
@@ -39,11 +39,11 @@ class userChangePwdService {
 
                 await resetTokenRepository.delete(userToken)
 
-                return "Password changed succesfully."
+                return "Password changed succesfully"
 
             } else {
 
-                throw new ErrorHandler(404, "User not found.")
+                throw new ErrorHandler(404, "User not found")
             }
         }
     }

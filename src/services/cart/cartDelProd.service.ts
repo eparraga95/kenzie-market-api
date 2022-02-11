@@ -28,7 +28,7 @@ class cartDelProdService {
         if (cart) {
 
             if (cart.products.filter(prod => prod.id === product_id).length === 0) {
-                throw new ErrorHandler(404, "Product is not in the cart.")
+                throw new ErrorHandler(404, "Product is not in the cart")
             }
 
             cart.products = cart.products.filter(prod => prod.id !== product_id)

@@ -29,7 +29,7 @@ class buyCreateService {
 
             if (cart.products.length === 0) {
 
-                throw new ErrorHandler(400, "This cart is empty.")
+                throw new ErrorHandler(400, "This cart is empty")
 
             }
 

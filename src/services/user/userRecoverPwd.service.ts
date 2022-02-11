@@ -85,7 +85,7 @@ class userRecoverPwdService {
             return
         });
 
-        return "An e-mail was sent to you with a password recover token."
+        return "An e-mail was sent to you with a password recover token"
     }
 }
 

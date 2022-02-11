@@ -18,8 +18,16 @@ class sendMailService {
 
         const user = await userRepository.findOne({ id: user_id })
 
+        const uuidRegex = /\b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b/gm
+
+        const isValid = uuidRegex.test(user_id)
+
+        if (!isValid) {
+            throw new ErrorHandler(400, "Invalid user id")
+        }
+
         if (!user) {
-            throw new ErrorHandler(404, "User not found.")
+            throw new ErrorHandler(404, "User not found")
         }
 
         const admin = await userRepository.findOne({ id: admin_id})
@@ -62,8 +70,10 @@ class sendMailService {
                 if(error){
                     return console.log(error);
                 }
-                return "Message sent."
+                return
             });
+
+            return "Mail sent."
         }
     } 
 }
